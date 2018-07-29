@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent (typeof (Rigidbody))]
 public class PlayerMover : MonoBehaviour 
 {
     public float speed = 4f;
