@@ -2,43 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof (Rigidbody))]
-[RequireComponent (typeof (Animator))]
-public class PlayerAnimationController : MonoBehaviour {
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Animator))]
+public class PlayerAnimationController : MonoBehaviour
+{
 
-	private Animator anim;
-	private Rigidbody rigidbody;
-	private Vector3 prevPos;
-	float prevSpeed;
+    private Animator anim;
+    private Rigidbody rigidbody;
+    private Vector3 prevPos;
+    float prevSpeed;
 
-	void Awake() {
-		anim = GetComponent<Animator>();
-		rigidbody = GetComponent<Rigidbody>();
-		prevPos = transform.position;
-	}
+    void Awake()
+    {
+        anim = GetComponent<Animator>();
+        rigidbody = GetComponent<Rigidbody>();
+        prevPos = transform.position;
+    }
 
-	void Update() {
-		var time = Time.deltaTime;
-		var dist = transform.position - prevPos;
-		var speed = new Vector3(dist.x, 0, dist.z).normalized.magnitude / time;
-				
-		if(prevSpeed == 0 && speed == 0) {
-			anim.SetFloat("Speed", 0);
-			Debug.Log("stands");
-		} else if (speed == 0) {
-			anim.SetFloat("Speed", prevSpeed);
-			Debug.Log("run in");
-		} else {
-			anim.SetFloat("Speed", speed);
-			Debug.Log("run");
-		}
+    void Update()
+    {
+        var time = Time.deltaTime;
+        var dist = transform.position - prevPos;
+        var speed = new Vector3(dist.x, 0, dist.z).normalized.magnitude / time;
 
-		prevPos = transform.position;
-		prevSpeed = speed;
-		// Debug.Log(speed);
-	}
+        if (prevSpeed == 0 && speed == 0)
+        {
+            anim.SetFloat("Speed", 0);
+            // Debug.Log("stands");
+        }
+        else if (speed == 0)
+        {
+            anim.SetFloat("Speed", prevSpeed);
+            // Debug.Log("run in");
+        }
+        else
+        {
+            anim.SetFloat("Speed", speed);
+            // Debug.Log("run");
+        }
 
-	/*
+        prevPos = transform.position;
+        prevSpeed = speed;
+        // Debug.Log(speed);
+    }
+
+    /*
 	void OnGUI()
     {
         //Create a Label in Game view for the Slider
