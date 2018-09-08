@@ -9,19 +9,41 @@ public class UiInteractionPositions : MonoBehaviour
     public List<LabelGui> objects = new List<LabelGui>();
     private float scaleFactor;
     private Canvas canvas;
+    private RectTransform canvasRect;
 
     private Camera cam;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         cam = Camera.main;
         canvas = GetComponent<Canvas>();
+        canvasRect = canvas.GetComponent<RectTransform>();
         scaleFactor = canvas.scaleFactor;
     }
 
     // Update is called once per frame
     void LateUpdate()
+    {
+        if (objects == null)
+        {
+            return;
+        }
+        objects.ForEach(x =>
+        {
+            Vector2 result;
+            Vector2 pos = x.transform.position;
+            Vector3 worldPoint = cam.WorldToScreenPoint(x.transform.position);
+            // RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, worldPoint, canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : cam, out result);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, worldPoint, null, out result);
+
+            Vector2 finalPos = new Vector2(result.x / scaleFactor, result.y / scaleFactor);
+
+            x.labelTransform.localPosition = finalPos;
+
+        });
+    }
+    void LateUpdateNotUsed()
     {
         if (objects == null)
         {

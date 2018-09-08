@@ -8,14 +8,12 @@ public class PlayerAnimationController : MonoBehaviour
 {
 
     private Animator anim;
-    private Rigidbody rigidbody;
     private Vector3 prevPos;
     float prevSpeed;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody>();
         prevPos = transform.position;
     }
 
